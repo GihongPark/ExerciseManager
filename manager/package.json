@@ -11,9 +11,12 @@
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -40,6 +43,8 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^2.2.0"
+    "@types/node-sass": "^4.11.0",
+    "gh-pages": "^2.2.0",
+    "node-sass": "^4.14.1"
   }
 }
