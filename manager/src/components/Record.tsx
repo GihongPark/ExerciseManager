@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Record } from '../modules/list';
 
-type recordProps = {
+type props = {
+    id: string;
     record: Record;
-    onRemoveRecord: (id: number) => void;
-    onUpdateRecord: (record: Record) => void
+    onRemoveRecord: (id: string, recordId: string) => void;
+    onUpdateRecord: (id: string, record: Record) => void;
 }
-function ListContents ({record, onRemoveRecord, onUpdateRecord}: recordProps) {
+function RecordComponent ({ id, record, onRemoveRecord, onUpdateRecord }: props) {
     const [exercise, setExercise] = useState(record.exercise);
     const [weight, setWeight] = useState(record.weight);
     const [reps, setReps] = useState(record.reps);
@@ -23,11 +24,12 @@ function ListContents ({record, onRemoveRecord, onUpdateRecord}: recordProps) {
     }
     const onModify = () => {
         if(exercise==='' || weight<=0 || reps<= 0) return;
-        onUpdateRecord({id:record.id, exercise, weight, reps});
+        onUpdateRecord(id, {id:record.id, exercise, weight, reps});
     }
     const onRemove = () => {
-        onRemoveRecord(record.id);
+        onRemoveRecord(id, record.id);
     }
+
     return (
         <li>
             <div>
@@ -54,4 +56,4 @@ function ListContents ({record, onRemoveRecord, onUpdateRecord}: recordProps) {
         </li>
     )
 }
-export default ListContents;
+export default RecordComponent;

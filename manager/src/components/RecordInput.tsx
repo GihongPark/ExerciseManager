@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Record } from '../modules/list';
 
-type ListProps = {
-    onAddRecord: (record: Record) => void;
+type props = {
+    id: string,
+    onAddRecord: (id: string, record: Record) => void
 }
-function ListInput ({onAddRecord}: ListProps) {
+function RecordInput ({id, onAddRecord}: props) {
     const [exercise, setExercise] = useState('');
     const [weight, setWeight] = useState(0);
     const [reps, setReps] = useState(0);
@@ -22,7 +23,7 @@ function ListInput ({onAddRecord}: ListProps) {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(exercise==='' || weight<=0 || reps<= 0) return;
-        onAddRecord({id:0, exercise, weight, reps});
+        onAddRecord(id, {id: '', exercise, weight, reps});
         onCancel()
     }
     const onCancel = () => {
@@ -32,9 +33,9 @@ function ListInput ({onAddRecord}: ListProps) {
     }
 
     return (
-        <div className='list-input'>
+        <div className='record-input'>
             <form onSubmit={onSubmit}>
-                <div className='input-contents'>
+            <div className='input-contents'>
                     <label>Exercise</label>
                     <input type='text' data-id='exercise'
                         onChange={onChange}
@@ -59,4 +60,4 @@ function ListInput ({onAddRecord}: ListProps) {
         </div>
     )
 }
-export default ListInput;
+export default RecordInput;

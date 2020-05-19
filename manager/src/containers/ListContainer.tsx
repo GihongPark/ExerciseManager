@@ -1,25 +1,35 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules';
-import { addRecord, removeRecord, updateRecord, Record } from '../modules/list';
-import List from '../components/List';
+import { addList, removeList, updateTitle } from '../modules/list';
+import ListComponent from '../components/List';
 
 function ListContainer () {
-    const list = useSelector((state: RootState) => state.list);
+    const lists = useSelector((state: RootState) => state.list);
     const dispatch = useDispatch();
 
-    const onAddRecord = (record: Record) => {
-        dispatch(addRecord(record));
-    }
-    const onRemoveRecord = (id: number) => {
-        dispatch(removeRecord(id));
-    }
-    const onUpdateRecord = (record: Record) => {
-        dispatch(updateRecord(record));
-    }
+    const onAddList = () => {
+        dispatch(addList())
+    };
+    const onRemoveList = (id: string) => {
+        dispatch(removeList(id))
+    };
+    const onUpdateTitle = (id: string, title: string) => {
+        dispatch(updateTitle(id, title))
+    };
 
+    const mapToList = () => lists.map(list => (
+        <ListComponent key={list.id} 
+            list={list} 
+            onRemoveList={onRemoveList} 
+            onUpdateTitle={onUpdateTitle}
+        />
+    ));
     return (
-        <List list={list} onAddRecord={onAddRecord} onRemoveRecord={onRemoveRecord} onUpdateRecord={onUpdateRecord} />
+        <>
+            {mapToList()}
+            <button type="button" className='add_list' onClick={onAddList}>Add list</button>
+        </>
     )
 }
 export default ListContainer;
