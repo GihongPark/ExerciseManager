@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {List} from '../modules/list';
 import RecordContainer from '../containers/RecordContainer';
+import './list.scss'
 
 type props = {
     list: List;
@@ -23,13 +24,13 @@ function ListComponent ({list, onRemoveList, onUpdateTitle}: props) {
     return (
         <div className='list'>
             <div className='list-header'>
-                <input type='text' onChange={onTitle} value={title} placeholder='title'></input>
-                <button type='button' onClick={onTitleSave}><FontAwesomeIcon icon={faPlus} /></button>
-                <button type='button' onClick={onListDelete}><FontAwesomeIcon icon={faTrashAlt} /></button>
+                <div className='list-title'>
+                    <input type='text' onChange={onTitle} value={title} placeholder='title' size={1} maxLength={100} />
+                    <button type='button' onClick={onTitleSave}><FontAwesomeIcon icon={faSave} /></button>
+                </div>
+                <button type='button' className='list-del' onClick={onListDelete}><FontAwesomeIcon icon={faTimes} /></button>
             </div>
-            <div className='list-contents'>
-                <RecordContainer id={list.id} records={list.records} />
-            </div>
+            <RecordContainer id={list.id} records={list.records} />
         </div>
     )
 }

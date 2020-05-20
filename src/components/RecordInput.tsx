@@ -22,6 +22,7 @@ function RecordInput ({id, onAddRecord}: props) {
     }
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(1);
         if(exercise==='' || weight<=0 || reps<= 0) return;
         onAddRecord(id, {id: '', exercise, weight, reps});
         onCancel()
@@ -40,16 +41,19 @@ function RecordInput ({id, onAddRecord}: props) {
                     <input type='text' data-id='exercise'
                         onChange={onChange}
                         value={exercise}
+                        size={1}
                     />
                     <label>Weight</label>
                     <input type='number' data-id='weight'
                         onChange={onChange}
                         value={weight}
+                        size={1}
                     />
                     <label>Reps</label>
                     <input type='number' data-id='reps'
                         onChange={onChange}
                         value={reps}
+                        size={1}
                     />
                 </div>
                 <div className='input-controls'>

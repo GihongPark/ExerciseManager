@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Record } from '../modules/list';
 
 type props = {
@@ -32,26 +34,14 @@ function RecordComponent ({ id, record, onRemoveRecord, onUpdateRecord }: props)
 
     return (
         <li>
-            <div>
-                <label>Exercise</label>
-                <input type='text' data-id='exercise'
-                    onChange={onChange}
-                    value={exercise}
-                />
-                <label>Weight</label>
-                <input type='number' data-id='weight'
-                    onChange={onChange}
-                    value={weight}
-                />
-                <label>Reps</label>
-                <input type='number' data-id='reps'
-                    onChange={onChange}
-                    value={reps}
-                />    
+            <div className='record-contents'>
+                <div>운동 : {exercise}</div>
+                <div>무게 : {weight}</div>
+                <div>횟수 : {reps}</div>
             </div>
-            <div>
-                <button type='button' onClick={onModify}>Modify</button>
-                <button type='button' onClick={onRemove}>Remove</button>
+            <div className="record-control">
+                <button type='button' onClick={onModify}><FontAwesomeIcon icon={faEdit} /></button>
+                {/* <button type='button' onClick={onRemove}>Remove</button> */}
             </div>
         </li>
     )
