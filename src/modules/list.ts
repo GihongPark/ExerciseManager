@@ -23,7 +23,7 @@ export const removeList = (id: string) => ({
 export const updateTitle = (
     id: string,
     title: string
-    ) => ({
+) => ({
     type: UPDATE_TITLE,
     payload: {
         id,
@@ -34,7 +34,7 @@ export const updateTitle = (
 export const addRecord = (
     id: string,
     record: Record
-    ) => ({
+) => ({
     type: ADD_RECORD,
     payload: {
         id: id,
@@ -49,7 +49,7 @@ export const addRecord = (
 export const removeRecord = (
     id: string,
     recordId: string
-    ) => ({
+) => ({
     type: REMOVE_RECORD,
     payload: {
         id: id,
@@ -61,7 +61,7 @@ export const removeRecord = (
 export const updateRecord = (
     id: string,
     record: Record
-    ) => ({
+) => ({
     type: UPDATE_RECORD,
     payload: {
         id: id,

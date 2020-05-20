@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import list from './list';
-// import kind from './kind';
+import exercise from './exercise';
 
 const rootReducer = combineReducers({
     list,
-    // kind
+    exercise
 });
 
 export default rootReducer;
