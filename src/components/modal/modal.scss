@@ -1,0 +1,107 @@
+.modal-wrapper {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .input-modal {
+        max-width: 322px;
+        width: 100%;
+        height: 242px;
+        padding: 6px 12px;
+
+        background-color: #fff;
+        border-radius: 5px;
+        box-sizing: border-box;
+
+        .input-contents {
+            display: flex;
+            flex-flow: column;
+
+            > div {
+                margin: 8px 0;
+            }
+            > div:last-child {
+                margin: 42px auto 0;
+
+            }
+
+            input {
+                margin-top: 2px;
+                padding: 0 4px;
+            }
+
+            .exercise-wrapper {
+                position: relative;
+
+                input { width: 100%; box-sizing: border-box; }
+                .exercise-selector {
+                    display: none;
+                    position: absolute;
+                    width: 100%;
+                    margin-top: 3px;
+                    font-size: 1rem;
+                    background-color: #fff;
+                    border: 1px solid #333;
+                    border-radius: 3px;
+                    box-sizing: border-box;
+                    z-index: 999;
+
+                    .section {
+                        padding: 0 2px;
+                        background-color: #ebecf0;
+                        button {
+                            width: 32px;
+                            margin: 0 1px;
+                            font-size: 1rem;
+                            background-color: transparent;
+                        }
+                        
+                    }
+                    .section::after {
+                        content: '';
+                        position: absolute;
+                        top: 24px;
+                        left: 0;
+                        width: 100%;
+                        height: 1px;
+                        background-color: #333;
+                    }
+
+                    ul {
+                        height: 121px;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+
+                        li { 
+                            padding: 0 4px;
+                            cursor: pointer; 
+                        }
+                        li:hover {
+                            background-color: #ebecf0;
+                        }
+                    }
+                }
+            }
+
+            .record-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-column-gap: 8px;
+            }
+
+            .control-wrapper {
+                button {
+                    margin: 0 4px;
+                    padding: 4px 32px;
+                    color: #fff;
+                    background-color: #4cbbb9;
+                    border-radius: 3px;
+                }
+            }
+        }
+    }
+}

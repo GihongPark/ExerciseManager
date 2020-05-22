@@ -1,47 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { openModal } from '../modules/modal';
 import { Record } from '../modules/list';
+import { useDispatch } from 'react-redux';
 
 type props = {
     id: string;
     record: Record;
-    onRemoveRecord: (id: string, recordId: string) => void;
-    onUpdateRecord: (id: string, record: Record) => void;
 }
-function RecordComponent ({ id, record, onRemoveRecord, onUpdateRecord }: props) {
-    const [exercise, setExercise] = useState(record.exercise);
-    const [weight, setWeight] = useState(record.weight);
-    const [reps, setReps] = useState(record.reps);
-
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        switch(e.currentTarget.dataset.id) {
-            case 'exercise':
-                return setExercise(e.currentTarget.value);
-            case 'weight':
-                return setWeight(Number(e.currentTarget.value));
-            case 'reps':
-                return setReps(Number(e.currentTarget.value));
-        }
-    }
-    const onModify = () => {
-        if(exercise==='' || weight<=0 || reps<= 0) return;
-        onUpdateRecord(id, {id:record.id, exercise, weight, reps});
-    }
-    const onRemove = () => {
-        onRemoveRecord(id, record.id);
-    }
+function RecordComponent ({ id, record }: props) {
+    const dispatch = useDispatch();
+    const onOpen = () => dispatch(openModal);
 
     return (
         <li>
             <div className='record-contents'>
-                <div>운동 : {exercise}</div>
-                <div>무게 : {weight}</div>
-                <div>횟수 : {reps}</div>
+                <div>운동 : {record.exercise}</div>
+                <div>무게 : {record.weight}</div>
+                <div>횟수 : {record.reps}</div>
             </div>
             <div className="record-control">
-                <button type='button' onClick={onModify}><FontAwesomeIcon icon={faEdit} /></button>
-                {/* <button type='button' onClick={onRemove}>Remove</button> */}
+                <button type='button' onClick={onOpen}><FontAwesomeIcon icon={faEdit} /></button>
             </div>
         </li>
     )
