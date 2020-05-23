@@ -19,10 +19,10 @@
         border-radius: 5px;
         overflow-y: auto;
     
-        input, button { background-color: transparent; }
         input {
             padding: 2px;
             color: #172b4d;
+            background-color: transparent;
             border: none;
             overflow: hidden;
             text-overflow: ellipsis;

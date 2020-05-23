@@ -49,7 +49,8 @@ export const addRecord = (
 export const removeRecord = (
     id: string,
     recordId: string
-) => ({
+) => {
+    return {
     type: REMOVE_RECORD,
     payload: {
         id: id,
@@ -57,7 +58,8 @@ export const removeRecord = (
             id: recordId
         }
     }
-});
+}
+};
 export const updateRecord = (
     id: string,
     record: Record

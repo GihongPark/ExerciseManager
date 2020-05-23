@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { openModal } from '../modules/modal';
+import { openAddInput } from '../modules/modal';
 import { Record } from '../modules/list';
 import { useDispatch } from 'react-redux';
 import RecordComponent from '../components/Record';
@@ -14,7 +14,7 @@ function RecordContainer ({id, records}:props) {
     const dispatch = useDispatch();
 
     const onOpen = () => {
-        dispatch(openModal());
+        dispatch(openAddInput(id));
     };
     const mapToRecord = () => {
         if(records.length === 0) return <li className='isEmpty'>운동 기록이 없습니다.</li>;

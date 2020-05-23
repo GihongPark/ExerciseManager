@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { openModal } from '../modules/modal';
+import { openUpdateInput } from '../modules/modal';
 import { Record } from '../modules/list';
 import { useDispatch } from 'react-redux';
 
@@ -11,7 +11,9 @@ type props = {
 }
 function RecordComponent ({ id, record }: props) {
     const dispatch = useDispatch();
-    const onOpen = () => dispatch(openModal);
+    const onOpen = () => {
+        dispatch(openUpdateInput(id, record))
+    };
 
     return (
         <li>

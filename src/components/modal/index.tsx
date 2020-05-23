@@ -11,22 +11,30 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import './modal.scss';
 
 type props = {
-    id: string;
+    state: string;
+    data: any;
     exercises: Exercise[];
-    onAddRecord: (id: string, record: Record) => void;
+    onAddRecord?: (id: string, record: Record) => void;
+    onUpdateRecord?: (id: string, record: Record) => void
+    onRemoveRecord?: (id: string, recordId: string) => void
 }
-function ModalComponent ({id, exercises, onAddRecord}: props) {
+function ModalComponent ({state, data, exercises, onAddRecord, onUpdateRecord, onRemoveRecord}: props) {
     const [exercise, setExercise] = useState('');
     const [exerciseList, setExerciseList] = useState(exercises);
     const [weight, setWeight] = useState(0);
     const [reps, setReps] = useState(0);
     const selector = useRef<HTMLDivElement>(null);
 
-    const dispatch = useDispatch();
-    
     useEffect(() => {
+        if (state === 'UPDATE_RECORD') {
+            const {record} = data;
+            setExercise(record.exercise);
+            setWeight(record.weight);
+            setReps(record.reps);
+        }
+    },[state,data]);
 
-    },[]);
+    const dispatch = useDispatch();
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         switch(e.currentTarget.dataset.id) {
@@ -43,8 +51,19 @@ function ModalComponent ({id, exercises, onAddRecord}: props) {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(exercise==='' || weight<=0 || reps<= 0) return;
-        onAddRecord(id, {id: '', exercise, weight, reps});
+        if(state === 'ADD_RECORD' && onAddRecord) {
+            onAddRecord(data.id, {id: '', exercise, weight, reps});
+        } else if(state === 'UPDATE_RECORD' && onUpdateRecord) {
+            onUpdateRecord(data.id, {id: data.record.id, exercise, weight, reps});
+        }
         onCancel()
+    }
+    const onRemove = () => {
+        if(!onRemoveRecord) return;
+        
+        // TODO: 리덕스 미들웨어
+        dispatch(onRemoveRecord(data.id, data.record.id));
+        onCancel();
     }
     const onCancel = () => {
         setExercise('');
@@ -74,6 +93,9 @@ function ModalComponent ({id, exercises, onAddRecord}: props) {
     return (
         <>
         <div className='input-modal'>
+            {state === 'UPDATE_RECORD' &&
+                <button type='button' className='remove' onClick={onRemove}><FontAwesomeIcon icon={faTrashAlt} /></button>
+            }
             <form onSubmit={onSubmit}>
                 <div className='input-contents'>
                     <div className='exercise-wrapper'>
@@ -115,7 +137,12 @@ function ModalComponent ({id, exercises, onAddRecord}: props) {
                         />
                     </div>
                     <div className='control-wrapper'>
-                        <button type='submit'>저장</button>
+                        {state === 'ADD_RECORD' &&
+                            <button type='submit'>저장</button>
+                        }
+                        {state === 'UPDATE_RECORD' &&
+                            <button type='submit'>수정</button>
+                        }
                         <button type='reset' onClick={onCancel}>취소</button>
                     </div>
                 </div>

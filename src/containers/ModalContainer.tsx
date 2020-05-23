@@ -2,15 +2,13 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules';
 import { Record, addRecord, removeRecord, updateRecord } from '../modules/list';
-import { addExercise, removeExercise, updateExercise } from '../modules/exercise';
 import Modal from '../components/modal';
 
 function ModalContainer () {
-    const isModal = useSelector((state: RootState) => state.modal);
+    const modalState = useSelector((state: RootState) => state.modal);
     const exercises = useSelector((state: RootState) => state.exercise);
     const dispatch = useDispatch();
     
-    // TODO: 파라미터 어떻게 받을지 고민
     const onAddRecord = (id: string, record: Record) => {
         dispatch(addRecord(id, record));
     }
@@ -23,9 +21,23 @@ function ModalContainer () {
 
     return (
         <>
-        {isModal && 
+        {modalState.state !== 'CLOSE_MODAL' &&
             <div className='modal-wrapper'>
-                <Modal id={'test'} exercises={exercises} onAddRecord={onAddRecord}/>
+                {modalState.state === 'ADD_RECORD' && modalState.data &&
+                    <Modal state={modalState.state} 
+                        data={modalState.data} 
+                        exercises={exercises} 
+                        onAddRecord={onAddRecord}
+                    />
+                }
+                {modalState.state === 'UPDATE_RECORD' && modalState.data &&
+                    <Modal state={modalState.state} 
+                        data={modalState.data} 
+                        exercises={exercises} 
+                        onUpdateRecord={onUpdateRecord}
+                        onRemoveRecord={onRemoveRecord}
+                    />
+                }
             </div>
         }
         </>

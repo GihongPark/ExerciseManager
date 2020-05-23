@@ -21,7 +21,7 @@ ul,li,ol {list-style: none;}
 h1,h2,h3,h4,h5,h6 {font-size: 1.2rem; font-weight: normal;}
 
 /* 버튼 초기화 */
-button {border:0; cursor: pointer;}
+button {border:0; background-color: transparent; cursor: pointer;}
 
 /* 반응형 이미지 */
 img, video {width: 100%}
