@@ -26,6 +26,12 @@ button {border:0; background-color: transparent; cursor: pointer;}
 /* 반응형 이미지 */
 img, video {width: 100%}
 
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #0079bf;
+    overflow-y: auto;
+}
 .show {
     display: inherit !important;
 }

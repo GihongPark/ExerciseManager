@@ -21,22 +21,10 @@ type props = {
 function ModalComponent ({state, data, exercises, onAddRecord, onUpdateRecord, onRemoveRecord}: props) {
     const [exercise, setExercise] = useState('');
     const [exerciseList, setExerciseList] = useState(exercises);
-    const [section, setSection] = useState('all');
     const [weight, setWeight] = useState(0);
     const [reps, setReps] = useState(0);
-
-    // 운동 추가
-    const [eSection, setESection] = useState('');
-    const [eName, setEName] = useState('');
-    const eInput = useRef<HTMLLIElement>(null);
-    const eBtn = useRef<HTMLLIElement>(null);
-    
     const selector = useRef<HTMLDivElement>(null);
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        getExerciseList(section);
-    },[section, exercises])
     useEffect(() => {
         if (state === 'UPDATE_RECORD') {
             const {record} = data;
@@ -45,6 +33,8 @@ function ModalComponent ({state, data, exercises, onAddRecord, onUpdateRecord, o
             setReps(record.reps);
         }
     },[state,data]);
+
+    const dispatch = useDispatch();
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         switch(e.currentTarget.dataset.id) {
@@ -75,82 +65,39 @@ function ModalComponent ({state, data, exercises, onAddRecord, onUpdateRecord, o
         dispatch(onRemoveRecord(data.id, data.record.id));
         onCancel();
     }
-
+    const onExercise =() => {
+        
+    }
     const onCancel = () => {
         setExercise('');
         setWeight(0);
         setReps(0);
         dispatch(closeModal());
     }
-    
-    // 운동추가
-    const onExercise = () => {
-        setEName('');
-        setESection('');
-        eInput.current?.classList.toggle('show');
-        eBtn.current?.classList.toggle('show');
-    }
-    const onExerciseChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-        switch(e.currentTarget.dataset.id) {
-            case 'section':
-                return setESection(e.currentTarget.value);
-            case 'name':
-                return setEName(e.currentTarget.value);
-        }
-    }
-    const onExerciseAdd = () => {
-        if(eName === '' || eSection === '') return false;
-        dispatch(addExercise(eName, eSection));
-
-        setExerciseInit();
-    }
-    const setExerciseInit = () => {
-        setEName('');
-        setESection('');
-        eBtn.current?.classList.add('show');
-        eInput.current?.classList.remove('show');
-    }
-    //
 
     const getExerciseList = (section: string) => {
         setExerciseList(exercises.filter(exercise => {
             if(section === 'all') return true;
             else return exercise.section === section;
         }));
-
-        setExerciseInit();
     }
     const mapToExercises = () => {
         let liArr = exerciseList.map(exercise => (
             <li key={exercise.id} onClick={() => {
                 setExercise(exercise.name);
-                setWeight(exercise.lately.weight);
-                setReps(exercise.lately.reps);
                 selector.current?.classList.remove('show');
             }}>{exercise.name}</li>
         ));
-        liArr.push(<li key='addExercise' className='addExercise show' ref={eBtn} onClick={onExercise}>+운동 추가</li> );
         liArr.push(
-            <li key='addExerciseInput' className='addExerciseInput' ref={eInput}>
-                <select data-id='section' 
-                    onChange={onExerciseChange}
-                    value={eSection}
-                >
-                    <option>부위</option>
-                    <option value='leg'>하체</option>
-                    <option value='chest'>가슴</option>
-                    <option value='back'>등</option>
-                    <option value='shoulder'>어깨</option>
-                    <option value='arm'>팔</option>
-                    <option value='abs'>복근</option>
-                </select>
-                <input type='text' data-id='name'
-                    onChange={onExerciseChange}
-                    value={eName}
-                    placeholder='운동 이름' size={1}/>
-                <button type='button' onClick={onExerciseAdd}><FontAwesomeIcon icon={faSave} /></button>
-            </li>
+            <li key='addExercise' className='addExercise' onClick={() => {}}>+운동 추가</li>
         );
+        liArr.push(
+            <li key='addExerciseInput' className='addExerciseInput'>
+                <input type='text' placeholder='부위' size={1}/>
+                <input type='text' placeholder='운동 이름' size={1}/>
+                <button type='button' onClick={onExercise}><FontAwesomeIcon icon={faSave} /></button>
+            </li>
+        )
         return liArr;
     };
 
@@ -173,13 +120,13 @@ function ModalComponent ({state, data, exercises, onAddRecord, onUpdateRecord, o
                         />
                         <div className='exercise-selector' ref={selector}>
                             <div className='section'>
-                                <button type='button' onClick={() => setSection('all')}>ALL</button>
-                                <button type='button' onClick={() => setSection('leg')}>하체</button>
-                                <button type='button' onClick={() => setSection('chest')}>가슴</button>
-                                <button type='button' onClick={() => setSection('back')}>등</button>
-                                <button type='button' onClick={() => setSection('shoulder')}>어깨</button>
-                                <button type='button' onClick={() => setSection('arm')}>팔</button>
-                                <button type='button' onClick={() => setSection('abs')}>복근</button>
+                                <button type='button' onClick={() => getExerciseList('all')}>ALL</button>
+                                <button type='button' onClick={() => getExerciseList('leg')}>하체</button>
+                                <button type='button' onClick={() => getExerciseList('chest')}>가슴</button>
+                                <button type='button' onClick={() => getExerciseList('back')}>등</button>
+                                <button type='button' onClick={() => getExerciseList('shoulder')}>어깨</button>
+                                <button type='button' onClick={() => getExerciseList('arm')}>팔</button>
+                                <button type='button' onClick={() => getExerciseList('abs')}>복근</button>
                                 <button type='button' className='right' onClick={() => selector.current?.classList.remove('show')}>취소</button>
                             </div>
                             <ul>

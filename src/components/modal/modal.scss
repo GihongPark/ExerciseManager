@@ -81,6 +81,8 @@
                     }
 
                     ul {
+                        display: flex;
+                        flex-flow: column;
                         height: 121px;
                         overflow-x: hidden;
                         overflow-y: auto;
@@ -93,11 +95,20 @@
                             background-color: #ebecf0;
                         }
 
-                        // .addExercise, .addExerciseInput {
-                        //     display: none;
-                        // }
                         .addExerciseInput {
-                            display: flex;
+                            select, input, button { 
+                                font-size: 1rem; 
+                                border: none;
+                                background-color: transparent;
+                            }
+                            select {
+                            }
+                            button {
+                                color: #6b778c;
+                            }
+                        }
+                        .addExercise, .addExerciseInput {
+                            display: none;
                         }
                     }
                 }
@@ -106,7 +117,7 @@
             .record-wrapper {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                grid-column-gap: 8px;
+                column-gap: 8px;
             }
 
             .control-wrapper {
