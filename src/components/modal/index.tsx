@@ -60,7 +60,7 @@ function ModalComponent ({state, data, exercises, onAddRecord, onUpdateRecord, o
     const onFocus = (e: React.FocusEvent<HTMLInputElement>) => selector.current?.classList.add('show');
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(exercise==='' || weight<=0 || reps<= 0) return;
+        if(exercise==='' || reps<= 0) return;
         if(state === 'ADD_RECORD' && onAddRecord) {
             onAddRecord(data.id, {id: '', exercise, weight, reps});
         } else if(state === 'UPDATE_RECORD' && onUpdateRecord) {
@@ -158,9 +158,9 @@ function ModalComponent ({state, data, exercises, onAddRecord, onUpdateRecord, o
     return (
         <>
         <div className='input-modal'>
-            {state === 'UPDATE_RECORD' &&
+            {/* {state === 'UPDATE_RECORD' &&
                 <button type='button' className='remove' onClick={onRemove}><FontAwesomeIcon icon={faTrashAlt} /></button>
-            }
+            } */}
             <form onSubmit={onSubmit}>
                 <div className='input-contents'>
                     <div className='exercise-wrapper'>
